@@ -55,6 +55,10 @@ echo|set /p="Setting power options (go to sleep - on ac)... "
 powercfg /change standby-timeout-ac 120 >nul 2>&1
 if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
 
+echo|set /p="Turning on hibernation... "
+powercfg /hibernate on >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
 echo:
 echo All tasks completed!
 pause
