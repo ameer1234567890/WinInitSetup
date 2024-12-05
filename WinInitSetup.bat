@@ -1,6 +1,7 @@
 @echo off
 
 set version=1.0.0
+set tzname="Pakistan Standard Time"
 
 echo WinInitSetup %version%
 echo:
@@ -32,6 +33,26 @@ if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m
 
 echo|set /p="Removing Taskbar search box... "
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search" /t REG_DWORD /v SearchboxTaskbarMode /d 0 /f >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Setting timezone... "
+tzutil /s %tzname% >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Setting power options (turn off display - on battery)... "
+powercfg /change monitor-timeout-dc 30 >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Setting power options (turn off display - on ac)... "
+powercfg /change monitor-timeout-ac 30 >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Setting power options (go to sleep - on battery)... "
+powercfg /change standby-timeout-dc 120 >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Setting power options (go to sleep - on ac)... "
+powercfg /change standby-timeout-ac 120 >nul 2>&1
 if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
 
 echo:
