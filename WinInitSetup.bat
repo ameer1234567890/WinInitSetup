@@ -66,6 +66,8 @@ if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m
 echo|set /p="Setting small desktop icons... "
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop" /t REG_DWORD /v IconSize /d 32 /f >nul 2>&1
 if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+taskkill /IM explorer.exe /f /FI "USERNAME eq %USERNAME%"
+start explorer.exe
 
 echo:
 echo All tasks completed!
