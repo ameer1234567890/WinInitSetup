@@ -73,6 +73,18 @@ echo|set /p="Adding Divehi language... "
 powershell -c "$ll=Get-WinUserLanguageList; $ll.add('dv-MV'); Set-WinUserLanguageList $ll -force;" >nul 2>&1
 if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
 
+echo|set /p="Disabling Windows Update... "
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /t REG_DWORD /v NoAutoUpdate /d 1 /f >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Stopping Windows Update Service... "
+sc config wuauserv start=disabled >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Disabling Windows Update Service... "
+sc stop wuauserv >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
 echo:
 echo All tasks completed!
 pause
