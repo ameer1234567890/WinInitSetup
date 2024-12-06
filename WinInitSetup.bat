@@ -59,6 +59,14 @@ echo|set /p="Turning on hibernation... "
 powercfg /hibernate on >nul 2>&1
 if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
 
+echo|set /p="Setting date format to dd/MM/yyyy... "
+reg add "HKCU\Control Panel\International" /t REG_SZ /v sShortDate /d "dd/MM/yyyy" /f >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Setting small desktop icons... "
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop" /t REG_DWORD /v IconSize /d 32 /f >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
 echo:
 echo All tasks completed!
 pause
