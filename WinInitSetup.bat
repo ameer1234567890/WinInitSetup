@@ -10,9 +10,7 @@ net session >nul 2>&1
 if %errorLevel% == 0 (
   echo Administrator previledges acquired!
 ) else (
-  echo This script requires administrative previledges. Please run as administrator!
-  pause
-  exit
+  echo It is recommended to run this script with administrative previledges.
 )
 
 echo|set /p="Setting Initial Keyboard State to numlock on... "
@@ -87,4 +85,3 @@ if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m
 
 echo:
 echo All tasks completed!
-pause
