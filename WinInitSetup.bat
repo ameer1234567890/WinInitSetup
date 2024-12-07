@@ -21,8 +21,12 @@ echo|set /p="Setting Default StartMenu alignment to left... "
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /t REG_DWORD /v TaskbarAl /d 0 /f >nul 2>&1
 if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
 
-echo|set /p="Removing Taskbar widgets... "
-reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /t REG_DWORD /v TaskbarDa /d 0 /f >nul 2>&1
+echo|set /p="Removing Taskbar widgets (step 1)... "
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests" /t REG_DWORD /v value /d 0 /f >nul 2>&1
+if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
+
+echo|set /p="Removing Taskbar widgets (step 2)... "
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Dsh" /t REG_DWORD /v AllowNewsAndInterests /d 0 /f >nul 2>&1
 if %errorLevel% == 0 ( echo [102m DONE [0m ) else ( echo [101;93m FAILED [0m )
 
 echo|set /p="Removing Taskview button... "
