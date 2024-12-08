@@ -1,5 +1,31 @@
 $version = "1.0.0"
 $tzName = "Pakistan Standard Time"
+$ErrorActionPreference = 'SilentlyContinue'
+
+$appsToRemove = @(
+  "Microsoft.BingNews",
+  "Microsoft.BingWeather",
+  "Microsoft.BingSearch",
+  "Microsoft.Copilot",
+  "Microsoft.WindowsFeedbackHub",
+  "Microsoft.WindowsMaps",
+  "Microsoft.MicrosoftOfficeHub",
+  "Microsoft.MicrosoftSolitaireCollection",
+  "Microsoft.MicrosoftStickyNotes",
+  "Clipchamp.Clipchamp",
+  "MSTeams",
+  "MicrosoftTeams",
+  "Microsoft.Todos",
+  "Microsoft.OutlookForWindows",
+  "Microsoft.People",
+  "Microsoft.PowerAutomateDesktop",
+  "MicrosoftCorporationII.QuickAssist",
+  "Microsoft.XboxIdentityProvider",
+  "Microsoft.XboxSpeechToTextOverlay",
+  "Microsoft.XboxGamingOverlay",
+  "Microsoft.XboxGameOverlay",
+  "Microsoft.Xbox.TCUI"
+)
 
 Write-Host "WinInitSetup $version"
 Write-Host
@@ -105,6 +131,22 @@ if ($isAdmin) {
   Write-Host -NoNewline "Disabling Windows Update Service... "
   Stop-Service wuauserv | out-null
   if ($? -eq 'True') {Write-Host -ForegroundColor White -BackgroundColor Green "DONE"} else {Write-Host -ForegroundColor White -BackgroundColor Red "FAILED"}
+}
+
+if ($isAdmin) {
+  $appsToRemove | ForEach-Object {
+    Write-Host -NoNewline "Removing App:"$PSItem"... "
+    $appFullName = Get-AppxPackage -AllUsers -Name $PSItem | Select-Object -ExpandProperty PackageFullName
+    Remove-AppxPackage -AllUsers -Package $appFullName | out-null
+    if ($? -eq 'True') {Write-Host -ForegroundColor White -BackgroundColor Green "DONE"} else {Write-Host -ForegroundColor White -BackgroundColor Red "FAILED"}
+  }
+} else {
+  $appsToRemove | ForEach-Object {
+    Write-Host -NoNewline "Removing App:"$PSItem"... "
+    $appFullName = Get-AppxPackage -Name $PSItem | Select-Object -ExpandProperty PackageFullName
+    Remove-AppxPackage -Package $appFullName | out-null
+    if ($? -eq 'True') {Write-Host -ForegroundColor White -BackgroundColor Green "DONE"} else {Write-Host -ForegroundColor White -BackgroundColor Red "FAILED"}
+  }
 }
 
 Write-Host
