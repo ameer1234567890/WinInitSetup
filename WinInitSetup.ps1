@@ -106,8 +106,7 @@ if ($? -eq 'True') {Write-Host -ForegroundColor White -BackgroundColor Green "DO
 Write-Host -NoNewline "Setting small desktop icons... "
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\Shell\Bags\1\Desktop" -PropertyType DWord -Name IconSize -Value 32 -Force | out-null
 if ($? -eq 'True') {Write-Host -ForegroundColor White -BackgroundColor Green "DONE"} else {Write-Host -ForegroundColor White -BackgroundColor Red "FAILED"}
-# taskkill /IM explorer.exe /f /FI "USERNAME eq %USERNAME%"
-# start explorer.exe
+# Stop-Process -ProcessName "explorer" -Force
 
 Write-Host -NoNewline "Adding Divehi language... "
 $ll = Get-WinUserLanguageList
@@ -148,6 +147,11 @@ if ($isAdmin) {
     if ($? -eq 'True') {Write-Host -ForegroundColor White -BackgroundColor Green "DONE"} else {Write-Host -ForegroundColor White -BackgroundColor Red "FAILED"}
   }
 }
+
+# Write-Host -NoNewline "Unpinning all taskbar icons... "
+# New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Force | out-null
+# if ($? -eq 'True') {Write-Host -ForegroundColor White -BackgroundColor Green "DONE"} else {Write-Host -ForegroundColor White -BackgroundColor Red "FAILED"}
+# Stop-Process -ProcessName "explorer" -Force
 
 Write-Host
 Write-Host "All tasks completed!"
